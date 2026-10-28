@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" width="1000" height="420" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5d6a6c"/></marker></defs>
+<rect width="1000" height="420" rx="24" fill="#f5f6f7"/>
+<rect x="40" y="70" width="200" height="190" rx="20" fill="#ffffff" stroke="#dde3e4" stroke-width="1.5"/>
+<text x="60" y="112" font-size="24" font-weight="800" fill="#101718">Plan rows</text>
+<text x="60" y="138" font-size="13" fill="#0f7f78" font-family="Menlo, Consolas, monospace">System 2 · frozen Qwen</text>
+<text x="60" y="196" font-size="14" fill="#5d6a6c" font-family="Menlo, Consolas, monospace">images + state + 1 demo</text>
+<text x="60" y="218" font-size="14" fill="#5d6a6c" font-family="Menlo, Consolas, monospace">+ past receipts</text>
+<rect x="280" y="70" width="200" height="190" rx="20" fill="#e1f3f1" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="300" y="112" font-size="24" font-weight="800" fill="#101718">Jam guard</text>
+<text x="300" y="138" font-size="13" fill="#0f7f78" font-family="Menlo, Consolas, monospace">System 1 · per step</text>
+<text x="300" y="196" font-size="14" fill="#5d6a6c" font-family="Menlo, Consolas, monospace">shear ≥ 6 px, rising</text>
+<text x="300" y="218" font-size="14" fill="#5d6a6c" font-family="Menlo, Consolas, monospace">→ stop + hold arm</text>
+<rect x="520" y="70" width="200" height="190" rx="20" fill="#e1f3f1" stroke="#0f7f78" stroke-width="1.5"/>
+<text x="540" y="112" font-size="24" font-weight="800" fill="#101718">Shear → mm</text>
+<text x="540" y="138" font-size="13" fill="#0f7f78" font-family="Menlo, Consolas, monospace">calibrated translator</text>
+<text x="540" y="196" font-size="14" fill="#5d6a6c" font-family="Menlo, Consolas, monospace">hand_y ≈ −0.79·asym</text>
+<text x="540" y="218" font-size="14" fill="#5d6a6c" font-family="Menlo, Consolas, monospace">− 0.4 mm · sign 20/20</text>
+<rect x="760" y="70" width="200" height="190" rx="20" fill="#ffffff" stroke="#dde3e4" stroke-width="1.5"/>
+<text x="780" y="112" font-size="24" font-weight="800" fill="#101718">Receipt</text>
+<text x="780" y="138" font-size="13" fill="#0f7f78" font-family="Menlo, Consolas, monospace">back into the context</text>
+<text x="780" y="196" font-size="14" fill="#5d6a6c" font-family="Menlo, Consolas, monospace">s1_jam · offset_hint</text>
+<text x="780" y="218" font-size="14" fill="#5d6a6c" font-family="Menlo, Consolas, monospace">· jam_history</text>
+<line x1="242" y1="165" x2="278" y2="165" stroke="#5d6a6c" stroke-width="2" marker-end="url(#a)"/>
+<line x1="482" y1="165" x2="518" y2="165" stroke="#5d6a6c" stroke-width="2" marker-end="url(#a)"/>
+<line x1="722" y1="165" x2="758" y2="165" stroke="#5d6a6c" stroke-width="2" marker-end="url(#a)"/>
+<path d="M 860 262 C 860 360, 140 360, 140 262" fill="none" stroke="#5d6a6c" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#a)"/>
+<text x="500" y="372" text-anchor="middle" font-size="16" fill="#5d6a6c">next call · at most 13 calls × 8 rows per episode</text>
+<text x="40" y="44" font-size="15" letter-spacing="2" fill="#0f7f78" font-family="Menlo, Consolas, monospace">ONE LOOP. TWO SYSTEMS.</text>
+</svg>

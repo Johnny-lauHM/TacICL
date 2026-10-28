@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 218" width="900" height="218" font-family="Helvetica, Arial, sans-serif">
+<rect width="900" height="218" rx="12" fill="#f6f8f8"/>
+<text x="20" y="28" font-size="15" font-weight="700" fill="#142124">insert_tube · 30 evaluation seeds (1000001–1000030) · one dot per episode</text>
+<text x="20" y="65" font-size="14" fill="#142124" font-weight="700">Ours: vision + tactile ICL</text>
+<text x="248" y="65" font-size="14" text-anchor="end" fill="#127a74" font-weight="700">24/30</text>
+<circle cx="270" cy="60" r="7" fill="#127a74"/>
+<circle cx="290" cy="60" r="7" fill="#127a74"/>
+<circle cx="310" cy="60" r="7" fill="#127a74"/>
+<circle cx="330" cy="60" r="7" fill="#127a74"/>
+<circle cx="350" cy="60" r="7" fill="#127a74"/>
+<circle cx="370" cy="60" r="7" fill="#127a74"/>
+<circle cx="390" cy="60" r="7" fill="#127a74"/>
+<circle cx="410" cy="60" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="430" cy="60" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="450" cy="60" r="7" fill="#127a74"/>
+<circle cx="470" cy="60" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="490" cy="60" r="7" fill="#127a74"/>
+<circle cx="510" cy="60" r="7" fill="#127a74"/>
+<circle cx="530" cy="60" r="7" fill="#127a74"/>
+<circle cx="550" cy="60" r="7" fill="#127a74"/>
+<circle cx="570" cy="60" r="7" fill="#127a74"/>
+<circle cx="590" cy="60" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="610" cy="60" r="7" fill="#127a74"/>
+<circle cx="630" cy="60" r="7" fill="#127a74"/>
+<circle cx="650" cy="60" r="7" fill="#127a74"/>
+<circle cx="670" cy="60" r="7" fill="#127a74"/>
+<circle cx="690" cy="60" r="7" fill="#127a74"/>
+<circle cx="710" cy="60" r="7" fill="#127a74"/>
+<circle cx="730" cy="60" r="7" fill="#127a74"/>
+<circle cx="750" cy="60" r="7" fill="#127a74"/>
+<circle cx="770" cy="60" r="7" fill="#127a74"/>
+<circle cx="790" cy="60" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="810" cy="60" r="7" fill="#127a74"/>
+<circle cx="830" cy="60" r="6" fill="#c5d0d0"/>
+<circle cx="850" cy="60" r="7" fill="#127a74"/>
+<text x="20" y="99" font-size="14" fill="#142124" font-weight="400">Direction-only hint (v1)</text>
+<text x="248" y="99" font-size="14" text-anchor="end" fill="#5b6b6e" font-weight="700">15/30</text>
+<circle cx="270" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="290" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="310" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="330" cy="94" r="7" fill="#127a74"/>
+<circle cx="350" cy="94" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="370" cy="94" r="7" fill="#127a74"/>
+<circle cx="390" cy="94" r="7" fill="#127a74"/>
+<circle cx="410" cy="94" r="7" fill="#127a74"/>
+<circle cx="430" cy="94" r="7" fill="#127a74"/>
+<circle cx="450" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="470" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="490" cy="94" r="7" fill="#127a74"/>
+<circle cx="510" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="530" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="550" cy="94" r="7" fill="#127a74"/>
+<circle cx="570" cy="94" r="7" fill="#127a74"/>
+<circle cx="590" cy="94" r="7" fill="#127a74"/>
+<circle cx="610" cy="94" r="7" fill="#127a74"/>
+<circle cx="630" cy="94" r="7" fill="#127a74"/>
+<circle cx="650" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="670" cy="94" r="7" fill="#127a74"/>
+<circle cx="690" cy="94" r="7" fill="#127a74"/>
+<circle cx="710" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="730" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="750" cy="94" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="770" cy="94" r="7" fill="#127a74"/>
+<circle cx="790" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="810" cy="94" r="7" fill="#127a74"/>
+<circle cx="830" cy="94" r="6" fill="#c5d0d0"/>
+<circle cx="850" cy="94" r="6" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="20" y="133" font-size="14" fill="#142124" font-weight="400">Vision only</text>
+<text x="248" y="133" font-size="14" text-anchor="end" fill="#5b6b6e" font-weight="700">3/30</text>
+<circle cx="270" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="290" cy="128" r="7" fill="#127a74"/>
+<circle cx="310" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="330" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="350" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="370" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="390" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="410" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="430" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="450" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="470" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="490" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="510" cy="128" r="7" fill="#127a74"/>
+<circle cx="530" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="550" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="570" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="590" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="610" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="630" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="650" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="670" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="690" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="710" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="730" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="750" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="770" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="790" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="810" cy="128" r="7" fill="#127a74"/>
+<circle cx="830" cy="128" r="6" fill="#c5d0d0"/>
+<circle cx="850" cy="128" r="6" fill="none" stroke="#c2453d" stroke-width="2"/>
+<circle cx="27" cy="190" r="6" fill="#127a74"/>
+<text x="38" y="194" font-size="12" fill="#5b6b6e">success</text>
+<circle cx="111.80000000000001" cy="190" r="5" fill="none" stroke="#c2453d" stroke-width="2"/>
+<text x="122.80000000000001" y="194" font-size="12" fill="#5b6b6e">tube slid >3 cm in hand (official early stop)</text>
+<circle cx="439.8" cy="190" r="5" fill="none" stroke="#c9871a" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="450.8" y="194" font-size="12" fill="#5b6b6e">13-call budget used up</text>
+<circle cx="620.6" cy="190" r="5" fill="#c5d0d0"/>
+<text x="631.6" y="194" font-size="12" fill="#5b6b6e">pre-move planning failed (policy never called)</text>
+</svg>

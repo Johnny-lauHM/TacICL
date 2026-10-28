@@ -1,0 +1,27 @@
+# insert_tube variant of univtac_icl: the official expert also succeeds under eval dynamics
+# (force=False), unlike the lift_can light grip. pre_move grasps the tube and places it at the
+# tilted hole with a 1-4 mm hidden offset; the policy does the insertion.
+defaults:
+  - univtac_icl
+  - _self_
+
+task: insert_tube
+# Official episode 37: push 2 cm, stall, lateral re-alignment, push again 4 cm.
+reference_episode: 37
+# Frame 30 ends the expert's first try_forward atom (the tube stalled, axial shear ~7 px); v3 renders it as
+# a System 1 jam stop in TRAIN. Guard v1 runs (insert_tube_guardG*) used reference_version=v2.
+reference_jam_frames: [30]
+reference_version: v3
+seeds: [1000001, 1000002, 1000003, 1000004, 1000005, 1000006, 1000007, 1000008, 1000009, 1000010]
+
+policy:
+  control: direct
+  # From envs/insert_tube.py check_success / check_early_stop; the hole pose itself is not given.
+  task_clarification: >-
+    Success means the test tube, still held in the gripper, has gone at least 3 cm into the
+    hole along the hole's axis, stays within 5 mm of that axis, and its long axis is aligned
+    with the hole axis (within about 15 degrees). The hole is very tight (0.5 mm clearance),
+    so a slightly misaligned tube stops against the hole rim instead of entering. The
+    evaluator ends the episode as a failure if the tube slides more than 3 cm inside the
+    gripper along the gripper's pointing direction (for example by pressing it hard against
+    the surface).

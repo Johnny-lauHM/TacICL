@@ -1,0 +1,1 @@
+2026-10-28 13:01:31 seed 2000301 exit=0 { "check_success": false, "early_stop": false, "final": {  "res_mm": [   2.92,   -3.58,   50.01  ],  "tilt_deg": 1.65,  "slip_mm": 2.32 }, "metadata": {  "random_noise": [   -0.0010384493183416426,   

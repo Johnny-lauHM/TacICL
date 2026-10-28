@@ -1,0 +1,84 @@
+# RoboICL-style ICL on official UniVTAC. prepare starts no simulator and no model.
+operation: prepare
+run_id: ???
+condition: ???   # zero_shot | zero_shot_tactile | visual | visual_live_tactile | visuotactile
+source_root: third_party/UniVTAC
+python: ${oc.env:PWD}/data/envs/univtac-isaac51/bin/python
+task: lift_can
+task_config: demo.yml
+device: cuda:0
+gpu: 0
+runtime_ports:
+  signal: 59770
+  media_min: 61010
+  media_max: 61032
+  http: 8997
+seeds: [1000000, 1000001, 1000002]
+output_root: data/runs/univtac_icl
+prepared_run: ${output_root}/${run_id}
+startup_timeout_s: 300
+episode_timeout_s: 1500
+worker_error_policy: continue
+deadline_utc: null
+
+# One official Isaac Sim 5.1 episode -> fixed TRAIN reference (shared by every TRAIN condition).
+reference_episode: 12
+reference_source: data/datasets/univtac_official/isaac51/${task}/hdf5/${reference_episode}.hdf5
+reference_source_id: univtac_official/isaac51/${task}/hdf5/${reference_episode}.hdf5
+reference_metadata: data/datasets/univtac_official/isaac51/${task}/metadata.json
+reference_waypoint_thresholds:
+  translation_mm: 4.0
+  finger_mm: 1.5
+  rotation_deg: 3.0
+  boundary_translation_mm: 1.0
+  boundary_finger_mm: 0.3
+# Source frames where the expert stopped on a stalled object; rendered as System 1 jam stops in TRAIN.
+reference_jam_frames: null
+reference_version: v2
+reference_output: data/datasets/univtac_icl/${task}_ep${reference_episode}_h${policy.horizon}_${reference_version}
+
+policy:
+  # direct: the VLM commands absolute finger openings itself (v2-v5).
+  # s1_tactile / s1_position: System 2 (VLM) picks a grip mode per call, System 1 runs it every
+  # control step; s1_position offers only open/position (no tactile loop).
+  # guard: direct rows executed under the System 1 jam guard (arm stops when marker shear says blocked).
+  control: s1_tactile
+  # qwen: the model is System 2. replay: diagnostic, re-executes the TRAIN intents (no model).
+  system2: qwen
+  replay_contact_mm: null   # replay diagnostic only: override the TRAIN contact target
+  # control=guard only, after a jam: none | direction (jam_guard.offset_hint, v1) |
+  # estimate (jam_guard.offset_estimate: y shift in mm + low-confidence x direction, plus jam_history).
+  jam_hint: none
+  horizon: 8
+  limits:
+    translation_mm: 20
+    rotation_deg: 15
+    finger_max_mm: 39
+  live_anchor_count: 6
+  max_calls: 13   # 13 x 8 = 104 rows, about the old 25 x 4 row budget
+  max_repairs: 2
+  base_url: http://127.0.0.1:18329/v1
+  model: qwen3.8-flash-next-iq3_s
+  timeout_s: 600
+  max_tokens: 1500
+  enable_thinking: false
+  # Same for every condition. The official lift_can instruction says "lift", but
+  # envs/lift_can.py check_success requires the can to end upright on the table,
+  # and check_early_stop fails the episode on >5 cm in-hand z drift (lift_can.py:89).
+  task_clarification: >-
+    Success means the can ends standing upright on the table surface, with its
+    long axis vertical. Holding or lifting the can in the air is not success.
+    The evaluator also ends the episode as a failure if, while the can has not
+    yet been rotated from its lying orientation, the gripper centre moves more
+    than 5 cm along the gripper's pointing direction relative to the can (for
+    example by raising the hand away from the can or by the can slipping out).
+  # MotorMind-style call: local Qwen with thinking off; the act call's execution_note,
+  # written before the rows, is the only reasoning. Unbounded thinking ran 2.5-5k tokens
+  # (~55 s) per call and MTP did not change decode speed (~88 tok/s, expert cache bound).
+  reasoning_guidance: null
+
+hydra:
+  job:
+    chdir: false
+  run:
+    dir: ${output_root}/hydra/${run_id}

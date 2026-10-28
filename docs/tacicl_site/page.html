@@ -1,0 +1,556 @@
+<title>TacICL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: launch-page rhythm. Full-width sections alternate page/canvas tones; each opens with a two-line display headline,
+   then one large media or interactive piece. The gel's marker-dot lattice is the recurring motif. */
+:root {
+  --page: #f5f6f7;
+  --canvas: #ffffff;
+  --ink: #101718;
+  --soft: #5d6a6c;
+  --line: #dde3e4;
+  --gel: #0f7f78;
+  --gel-2: #19a89d;
+  --gel-wash: #e1f3f1;
+  --wood: #c96a2b;
+  --fail: #c4473f;
+  --warn: #c98a1c;
+  --dot: #c9d3d4;
+  --nav: rgba(245, 246, 247, 0.78);
+  --display: "Schibsted Grotesk", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --max: 1140px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #0b1012; --canvas: #121a1c; --ink: #eef4f4; --soft: #96a7a9; --line: #233335;
+    --gel: #46c7bb; --gel-2: #7fe0d5; --gel-wash: #10302d; --wood: #e9905a; --fail: #f0766c; --warn: #e8ad4a; --dot: #2c3c3f;
+    --nav: rgba(11, 16, 18, 0.72); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #0b1012; --canvas: #121a1c; --ink: #eef4f4; --soft: #96a7a9; --line: #233335;
+  --gel: #46c7bb; --gel-2: #7fe0d5; --gel-wash: #10302d; --wood: #e9905a; --fail: #f0766c; --warn: #e8ad4a; --dot: #2c3c3f;
+  --nav: rgba(11, 16, 18, 0.72); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--page); color: var(--ink); font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+.sec { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: clamp(64px, 9vw, 120px); scroll-margin-top: 56px; }
+.sec.alt { background: var(--canvas); }
+.in { max-width: var(--max); margin-inline: auto; display: grid; gap: 28px; }
+.narrow { max-width: 720px; }
+h1, h2, h3 { margin: 0; font-family: var(--display); text-wrap: balance; }
+h2 { font-size: clamp(2.2rem, 1.3rem + 3.6vw, 4.2rem); line-height: 1.02; font-weight: 800; letter-spacing: -0.03em; }
+h2 .dim { color: var(--soft); }
+h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0; }
+.lede { font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem); color: var(--soft); max-width: 62ch; }
+.eyebrow { font: 500 0.78rem/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--gel); }
+.mono { font-family: var(--mono); font-size: 0.9em; }
+a { color: var(--gel); }
+:focus-visible { outline: 2px solid var(--gel); outline-offset: 3px; border-radius: 6px; }
+
+/* nav */
+nav.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--nav); backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+nav.top .bar { max-width: var(--max); margin-inline: auto; height: 52px; display: flex; align-items: center; gap: 22px; }
+nav.top .brand { font: 800 1.05rem var(--display); color: var(--ink); text-decoration: none; letter-spacing: -0.02em; }
+nav.top .brand b { color: var(--gel); }
+nav.top .links { display: flex; gap: 18px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
+nav.top .links a { color: var(--soft); text-decoration: none; font-size: 0.86rem; white-space: nowrap; }
+nav.top .links a:hover { color: var(--ink); }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 999px; font: 600 0.92rem var(--body); text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+.pill.solid { background: var(--ink); color: var(--page); }
+.pill.line { border-color: var(--line); color: var(--ink); background: transparent; }
+.pill.small { padding: 6px 14px; font-size: 0.84rem; }
+.pill svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* hero */
+.hero { position: relative; overflow: hidden; padding-block: clamp(56px, 8vw, 96px) 40px; }
+.hero::before { content: ""; position: absolute; inset: -20% 0 30% 0; pointer-events: none;
+  background-image: radial-gradient(circle, var(--dot) 1.7px, transparent 2.2px); background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 20%, transparent 75%); }
+.hero .in { position: relative; justify-items: center; text-align: center; gap: 22px; }
+.wordmark { font: 900 clamp(3.6rem, 2rem + 8vw, 8rem)/0.9 var(--display); letter-spacing: -0.05em; }
+.wordmark b { color: var(--gel); font-weight: 900; }
+.tagline { font: 800 clamp(1.7rem, 1.1rem + 2.6vw, 3.1rem)/1.05 var(--display); letter-spacing: -0.03em; }
+.tagline span { display: block; }
+.tagline .t2 { background: linear-gradient(90deg, var(--gel), var(--gel-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.statline { font: 500 0.95rem var(--mono); color: var(--soft); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
+.statline b { color: var(--ink); font-weight: 500; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.hero-media { max-width: var(--max); margin: 44px auto 0; display: grid; gap: 12px; position: relative; }
+video { width: 100%; max-width: 100%; display: block; background: #000; border-radius: 18px; }
+.cap { font-size: 0.9rem; color: var(--soft); }
+.cap b { color: var(--ink); font-weight: 600; }
+
+/* highlights */
+.hl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--canvas); border-radius: 22px; padding: 28px; display: grid; gap: 10px; align-content: start; }
+.sec.alt .card { background: var(--page); }
+.card .big { font: 900 clamp(3rem, 2rem + 3vw, 4.6rem)/0.95 var(--display); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.card .big.g { color: var(--gel); }
+.card .big small { font-size: 0.42em; font-weight: 700; color: var(--soft); letter-spacing: -0.01em; }
+.card p { color: var(--soft); font-size: 0.97rem; }
+.card p b { color: var(--ink); font-weight: 600; }
+
+/* tabs */
+.tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--page); border: 1px solid var(--line); flex-wrap: wrap; }
+.sec:not(.alt) .tabs { background: var(--canvas); }
+.tab { border: 0; background: transparent; color: var(--soft); font: 600 0.9rem var(--body); padding: 9px 18px; border-radius: 999px; cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--page); }
+.stage { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+.verdict { display: grid; gap: 14px; }
+.verdict .tag { justify-self: start; font: 600 0.8rem var(--mono); padding: 5px 12px; border-radius: 999px; letter-spacing: 0.04em; }
+.tag.ok { background: var(--gel-wash); color: var(--gel); }
+.tag.bad { background: color-mix(in srgb, var(--fail) 14%, transparent); color: var(--fail); }
+.tag.mid { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+.verdict h3 { font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem); line-height: 1.15; }
+.verdict p { color: var(--soft); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; font: 0.88rem var(--mono); }
+.kv dt { color: var(--soft); }
+.kv dd { margin: 0; }
+
+/* loop */
+.loop { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.loop svg { width: 100%; height: auto; max-width: 520px; justify-self: center; }
+.loop svg text { font-family: var(--display); font-weight: 700; font-size: 15px; fill: var(--ink); }
+.loop svg .sub { font-family: var(--mono); font-weight: 400; font-size: 11px; fill: var(--soft); }
+.steps { display: grid; gap: 18px; counter-reset: s; padding: 0; margin: 0; }
+.steps li { list-style: none; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; counter-increment: s; }
+.steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font: 700 0.9rem var(--mono); background: var(--gel-wash); color: var(--gel); }
+.steps p { color: var(--soft); font-size: 0.97rem; }
+.steps b { color: var(--ink); }
+code { font-family: var(--mono); font-size: 0.86em; }
+
+/* stepper */
+.stepper { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+.pane { background: var(--canvas); border-radius: 22px; padding: 26px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.sec.alt .pane { background: var(--page); }
+.pane .who { font: 500 0.8rem var(--mono); color: var(--soft); letter-spacing: 0.04em; }
+.pane blockquote { margin: 0; font: 500 1.08rem/1.5 var(--display); letter-spacing: -0.005em; }
+.json { font: 0.84rem/1.6 var(--mono); white-space: pre; overflow-x: auto; margin: 0; }
+.json .k { color: var(--gel); } .json .s { color: var(--wood); } .json .n { color: var(--ink); }
+.ctrl { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ticks { display: flex; gap: 6px; }
+.ticks button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--soft); font: 600 0.8rem var(--mono); cursor: pointer; }
+.ticks button.jam { border-color: var(--wood); color: var(--wood); }
+.ticks button.win { border-color: var(--gel); color: var(--gel); }
+.ticks button[aria-current="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+
+/* calibration + grid */
+.two { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 36px; align-items: center; }
+svg.chart { width: 100%; height: auto; }
+svg.chart text { fill: var(--soft); font: 11px var(--mono); }
+svg.chart .ink { fill: var(--ink); font-weight: 500; }
+.gridwrap { overflow-x: auto; background: var(--canvas); border-radius: 22px; padding: 24px; }
+.sec.alt .gridwrap { background: var(--page); }
+.seedgrid { display: grid; grid-template-columns: 190px repeat(30, 20px); gap: 10px 5px; align-items: center; min-width: 820px; }
+.seedgrid .lab { font: 600 0.92rem var(--body); line-height: 1.2; padding-right: 12px; }
+.seedgrid .lab small { display: block; font: 400 0.78rem var(--mono); color: var(--soft); }
+.seedgrid .lab.lead { color: var(--gel); }
+.dot { width: 15px; height: 15px; border-radius: 50%; justify-self: center; transition: opacity .25s, transform .25s; }
+.dot.s { background: var(--gel); }
+.dot.e { border: 2px solid var(--fail); }
+.dot.b { border: 2px dashed var(--warn); }
+.dot.p { background: var(--dot); }
+.dot.off { opacity: 0.12; transform: scale(0.7); }
+.axis { font: 0.7rem var(--mono); color: var(--soft); text-align: center; }
+.key { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 0.86rem; color: var(--soft); }
+.key span { display: inline-flex; gap: 8px; align-items: center; }
+.key .dot { width: 12px; height: 12px; }
+.score { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.score .card .big { font-size: clamp(2.4rem, 1.8rem + 2vw, 3.4rem); }
+
+/* failures */
+.fails { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+
+/* faq */
+.faq { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 20px 4px; font: 700 1.12rem var(--display); display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 400 1.4rem/1 var(--body); color: var(--soft); }
+.faq details[open] summary::after { content: "−"; }
+.faq .ans { padding: 0 4px 22px; color: var(--soft); max-width: 70ch; display: grid; gap: 10px; }
+.faqhead { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
+
+/* cite */
+.cite { background: var(--canvas); border-radius: 22px; padding: 24px; display: grid; gap: 14px; }
+.sec.alt .cite { background: var(--page); }
+.cite pre { margin: 0; font: 0.85rem/1.6 var(--mono); overflow-x: auto; }
+footer { padding-block: 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); color: var(--soft); font-size: 0.85rem; border-top: 1px solid var(--line); }
+footer .in { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+@media (max-width: 900px) {
+  .hl, .score { grid-template-columns: minmax(0, 1fr); }
+  .stage, .loop, .stepper, .two, .fails { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) { nav.top .links { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .dot { transition: none; } }
+</style>
+
+<nav class="top" aria-label="Sections">
+  <div class="bar">
+    <a class="brand" href="#top">Tac<b>ICL</b></a>
+    <div class="links">
+      <a href="#highlights">Highlights</a>
+      <a href="#compare">Side by side</a>
+      <a href="#how">How it works</a>
+      <a href="#call">One episode</a>
+      <a href="#calibration">Calibration</a>
+      <a href="#results">Results</a>
+      <a href="#failures">Failures</a>
+      <a href="#faq">Questions</a>
+    </div>
+    <a class="pill solid small" href="https://github.com/Johnny-lauHM/TacICL" target="_blank" rel="noopener">Code</a>
+  </div>
+</nav>
+
+<header class="sec hero" id="top">
+  <div class="in">
+    <span class="eyebrow">Frozen VLM · GelSight touch · UniVTAC insert_tube</span>
+    <h1 class="wordmark">Tac<b>ICL</b></h1>
+    <p class="tagline"><span>Vision gets it close.</span><span class="t2">Touch gets it in.</span></p>
+    <p class="lede">In-context tactile insertion with a frozen vision-language model. One demonstration, a tactile jam guard running every control step, and a calibrated translation from gel marker shear to millimetres of hand correction.</p>
+    <p class="statline"><span><b>24/30</b> with touch</span><span><b>3/30</b> vision only</span><span><b>0</b> fine-tuning steps</span></p>
+    <div class="cta">
+      <a class="pill solid" href="https://github.com/Johnny-lauHM/TacICL" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Code</a>
+      <a class="pill line" href="https://github.com/Johnny-lauHM/TacICL/blob/main/data/reports/univtac_icl_insert_tube_20261028/README_v2_scale30.md" target="_blank" rel="noopener">Report</a>
+      <a class="pill line" href="#compare">Watch the comparison</a>
+    </div>
+  </div>
+  <div class="hero-media">
+    <video src="media/touch_closeup_1000003.mp4" poster="media/poster_touch.jpg" autoplay muted loop playsinline aria-label="Wrist camera and both gel pads during a successful insertion"></video>
+    <p class="cap"><b>Wrist camera and both GelSight pads, evaluation seed 1000003, 2× speed.</b> The tube stops at the rim of a 30° hole hidden 1–4 mm off-axis. Watch the marker dots on the right shear under the load; that shear is what moves the hand.</p>
+  </div>
+</header>
+
+<section class="sec alt" id="highlights">
+  <div class="in">
+    <h2>Get the highlights.</h2>
+    <div class="hl">
+      <div class="card"><span class="big g">8×</span><h3>More insertions than vision alone</h3><p><b>24 of 30</b> with tactile ICL against <b>3 of 30</b> with the same model, the same demonstration and the same cameras. Fisher p ≈ 5.6·10⁻⁸.</p></div>
+      <div class="card"><span class="big">0</span><h3>Gradient steps</h3><p>The policy is a <b>frozen</b> 3-bit local Qwen with thinking off. Touch enters through the context: receipts, a jam history and one demonstration rewritten in the same format.</p></div>
+      <div class="card"><span class="big g">1<small> mm</small></span><h3>From pixels to millimetres</h3><p>Pad shear asymmetry predicts the hand's y offset from the hole axis with about <b>1 mm</b> residual. The sign was right at <b>20 of 20</b> calibration jams.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="compare">
+  <div class="in">
+    <h2>Same seed.<br><span class="dim">Three policies.</span></h2>
+    <p class="lede">Evaluation seed 1000003. The hole is hidden 3.1 mm off in x and 1.9 mm in y. Same frozen model, same demonstration, same cameras. Only what touch is allowed to do changes.</p>
+    <div class="tabs" role="tablist" aria-label="Policy">
+      <button class="tab" role="tab" id="t-vis" aria-selected="false" data-k="vis">Vision only</button>
+      <button class="tab" role="tab" id="t-stop" aria-selected="false" data-k="stop">Touch stops the arm</button>
+      <button class="tab" role="tab" id="t-ours" aria-selected="true" data-k="ours">Tactile ICL</button>
+    </div>
+    <div class="stage">
+      <video id="cmp-video" src="media/v2_1000003.mp4" poster="media/p_v2_1000003.jpg" controls muted loop playsinline autoplay aria-label="Policy rollout"></video>
+      <div class="verdict" id="cmp-verdict"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="how">
+  <div class="in">
+    <h2>One loop.<br><span class="dim">Two systems.</span></h2>
+    <div class="loop">
+      <svg viewBox="0 0 520 440" role="img" aria-label="Loop: plan rows, guard each step, translate shear, return a receipt">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--soft)"/></marker></defs>
+        <circle cx="260" cy="220" r="150" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 6"/>
+        <path d="M 330 92 A 150 150 0 0 1 398 160" fill="none" stroke="var(--soft)" stroke-width="2" marker-end="url(#ah)"/>
+        <path d="M 395 290 A 150 150 0 0 1 330 350" fill="none" stroke="var(--soft)" stroke-width="2" marker-end="url(#ah)"/>
+        <path d="M 190 350 A 150 150 0 0 1 125 290" fill="none" stroke="var(--soft)" stroke-width="2" marker-end="url(#ah)"/>
+        <path d="M 122 160 A 150 150 0 0 1 190 92" fill="none" stroke="var(--soft)" stroke-width="2" marker-end="url(#ah)"/>
+        <g><rect x="180" y="40" width="160" height="66" rx="16" fill="var(--canvas)" stroke="var(--line)"/><text x="260" y="68" text-anchor="middle">Plan rows</text><text class="sub" x="260" y="88" text-anchor="middle">System 2 · frozen Qwen</text></g>
+        <g><rect x="360" y="187" width="150" height="66" rx="16" fill="var(--gel-wash)" stroke="var(--gel)"/><text x="435" y="215" text-anchor="middle">Jam guard</text><text class="sub" x="435" y="235" text-anchor="middle">every control step</text></g>
+        <g><rect x="180" y="334" width="160" height="66" rx="16" fill="var(--gel-wash)" stroke="var(--gel)"/><text x="260" y="362" text-anchor="middle">Shear → mm</text><text class="sub" x="260" y="382" text-anchor="middle">calibrated translator</text></g>
+        <g><rect x="10" y="187" width="150" height="66" rx="16" fill="var(--canvas)" stroke="var(--line)"/><text x="85" y="215" text-anchor="middle">Receipt</text><text class="sub" x="85" y="235" text-anchor="middle">+ jam history</text></g>
+        <text x="260" y="214" text-anchor="middle" style="font-size:30px;font-weight:900;fill:var(--gel)">≤ 13</text>
+        <text class="sub" x="260" y="236" text-anchor="middle">calls per episode</text>
+      </svg>
+      <ol class="steps">
+        <li><div><h3>Plan</h3><p>The frozen VLM reads head and wrist images, robot state, one demonstration and its own earlier receipts. It writes up to 8 rows <code>[dx,dy,dz,rx,ry,rz,finger]</code> and a one-line note.</p></div></li>
+        <li><div><h3>Guard</h3><p>System 1 executes the rows one control step at a time and watches only the gel marker field. At <b>≥ 6 px</b> axial shear that is still rising, it stops and holds the arm. The tube never gets shoved deep into the gripper.</p></div></li>
+        <li><div><h3>Translate</h3><p>Pad asymmetry <code>|R| − |L|</code> becomes <code>shift_hand_y_mm</code> through <b>hand_y ≈ −0.79·asym − 0.4 mm</b>, calibrated on separate development seeds. Lateral shear gives a low-confidence x direction.</p></div></li>
+        <li><div><h3>Remember</h3><p>The receipt returns the stop, the shear, the estimate and every earlier jam position. When two jams point in opposite directions, the model moves between them.</p></div></li>
+      </ol>
+    </div>
+    <div class="two" style="margin-top:12px">
+      <div style="display:grid;gap:14px">
+        <h3>The demonstration speaks touch, too.</h3>
+        <p class="lede" style="font-size:1rem">Official episode 37 is cut where the expert's first push stalled. That block is replayed with the exact receipt System 1 would have produced from the demo's own marker shear. Its hint points the way the expert really corrected. Before the first live call, the model has already seen <i>jam → read touch → small shift → push</i> once.</p>
+      </div>
+      <div class="pane"><span class="who">TRAIN · demonstration block 0 · frame 30</span><pre class="json" id="train-json"></pre></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="call">
+  <div class="in">
+    <h2>One jam.<br><span class="dim">One number.</span></h2>
+    <p class="lede">Step through seed 1000003 call by call. The quote is the model's own <code>execution_note</code>, verbatim. On the right is what System 1 handed back.</p>
+    <div class="ctrl">
+      <button class="pill line small" id="prev" aria-label="Previous call">←</button>
+      <div class="ticks" id="ticks"></div>
+      <button class="pill line small" id="next" aria-label="Next call">→</button>
+    </div>
+    <div class="stepper">
+      <div class="pane"><span class="who" id="call-who"></span><blockquote id="call-note"></blockquote></div>
+      <div class="pane"><span class="who">receipt.system1</span><pre class="json" id="call-json"></pre></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="calibration">
+  <div class="in">
+    <div class="two">
+      <div style="display:grid;gap:18px">
+        <h2>Calibrated,<br><span class="dim">not guessed.</span></h2>
+        <p class="lede">On 14 development seeds a probe pushed the tube into the rim, recorded the shear, made a deliberately imperfect correction and pushed again. The privileged hand-to-axis offset served only as a label. The pads' asymmetry tracked the y offset at first and later jams alike.</p>
+        <div class="kv"><dt>sign correct</dt><dd>20 / 20 jams</dd><dt>fit</dt><dd>hand_y = −0.79 · asym − 0.4 mm</dd><dt>residual</dt><dd>0.7 mm first jams · 1.1 mm all</dd><dt>x from lateral shear</dt><dd>≈ 50 % → reported as low confidence</dd></div>
+      </div>
+      <svg class="chart" id="scatter" viewBox="0 0 460 340" role="img" aria-label="Pad asymmetry against hand y offset"></svg>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="results">
+  <div class="in">
+    <h2>30 seeds.<br><span class="dim">Every dot.</span></h2>
+    <p class="lede">Evaluation seeds 1000001–1000030, official UniVTAC success check. One dot is one episode. Filter by which side the hidden offset fell on.</p>
+    <div class="tabs" role="tablist" aria-label="Offset side">
+      <button class="tab" role="tab" aria-selected="true" data-f="all">All 30</button>
+      <button class="tab" role="tab" aria-selected="false" data-f="pos">Hidden y &gt; 0</button>
+      <button class="tab" role="tab" aria-selected="false" data-f="neg">Hidden y &lt; 0</button>
+    </div>
+    <div class="gridwrap"><div class="seedgrid" id="seedgrid"></div></div>
+    <div class="key">
+      <span><i class="dot s"></i>success</span>
+      <span><i class="dot e"></i>tube slid &gt; 3 cm in the gripper</span>
+      <span><i class="dot b"></i>13-call budget used up</span>
+      <span><i class="dot p"></i>official pre-move failed before the policy ran</span>
+    </div>
+    <div class="score" id="score"></div>
+    <p class="cap">Fisher exact, two-sided: tactile ICL vs vision only p ≈ 5.6·10⁻⁸; vs direction-only hints p = 0.029. A 10-seed ablation that showed raw shear numbers without a hint scored 0/10.</p>
+  </div>
+</section>
+
+<section class="sec alt" id="failures">
+  <div class="in">
+    <h2>Where it<br><span class="dim">still breaks.</span></h2>
+    <div class="tabs" role="tablist" aria-label="Failure mode">
+      <button class="tab" role="tab" aria-selected="true" data-x="deep">Aligned, stuck deep · 3</button>
+      <button class="tab" role="tab" aria-selected="false" data-x="approach">Wrong approach · 2</button>
+      <button class="tab" role="tab" aria-selected="false" data-x="vision">Vision only, for contrast</button>
+    </div>
+    <div class="fails">
+      <video id="fail-video" src="media/v2fail_1000011.mp4" poster="media/p_v2fail_1000011.jpg" controls muted loop playsinline preload="metadata" aria-label="Failure rollout"></video>
+      <div class="verdict" id="fail-verdict"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="in narrow" style="margin-inline:auto;width:100%">
+    <div class="faqhead"><h2>Questions?<br><span class="dim">Answers.</span></h2><button class="pill line small" id="expand">Expand all</button></div>
+    <div class="faq">
+      <details><summary>Is the model fine-tuned?</summary><div class="ans"><p>No. The model is a frozen local Qwen (<code>qwen3.8-flash-next-iq3_s</code>) with thinking off. Everything it learns about touch comes from its context: the receipts, the jam history and the single demonstration rendered in the same receipt format.</p></div></details>
+      <details><summary>Does the policy ever see where the hole is?</summary><div class="ans"><p>No. During evaluation the policy reads only cameras, robot state, finger press depth and the gel marker field. The hole pose was used only offline, as a label on separate development seeds, to fit the shear-to-millimetre line.</p></div></details>
+      <details><summary>So did the VLM learn to read touch?</summary><div class="ans"><p>Not on its own. With the jam guard and raw shear numbers but no translated hint, it scored 0/10. The gain comes from the calibrated translator plus the tactile demonstration. The VLM's job is to follow the contact routine and bracket the hole between jams, which it does reliably.</p></div></details>
+      <details><summary>Why can't vision do the last few millimetres?</summary><div class="ans"><p>The hidden offset is 1–4 mm, one or two pixels in a 480×270 frame. At the rim, the tube and fingers hide the hole edge. Vision-only rollouts keep pushing; the tube jams and slides out of the gripper in 26 of 30 episodes.</p></div></details>
+      <details><summary>Why is x only a low-confidence direction?</summary><div class="ans"><p>In the policy runs, lateral shear matched the hidden x offset at every first jam. In the calibration probe, with pure axial pushes, it was right only about half the time. Until that gap is explained, the receipt labels x as low confidence and the prompt only allows 1 mm x probes once y has converged.</p></div></details>
+      <details><summary>What would a real robot need?</summary><div class="ans"><p>Its own calibration of the translator: known-offset push trials with the arm's repeatability as the label, or labels recovered after the fact from successful insertions. It also needs compliant, slow pushing and the runtime's safety gate on every command. The structure carries over; the numbers do not.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="cite">
+  <div class="in">
+    <h2>Cite.</h2>
+    <div class="cite">
+      <div class="faqhead"><span class="eyebrow">BibTeX</span><button class="pill line small" id="copy">Copy</button></div>
+      <pre id="bib">@misc{tacicl2026,
+  title        = {TacICL: In-Context Tactile Insertion with a Frozen Vision-Language Model},
+  author       = {{TacICL contributors}},
+  year         = {2026},
+  howpublished = {\url{https://github.com/Johnny-lauHM/TacICL}}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<footer><div class="in"><span>TacICL · UniVTAC on Isaac Sim 5.1</span><span>Results from 2026-10-28 · simulation only</span></div></footer>
+
+<script id="data" type="application/json">{"calib":[[2.86,-1.95,0],[-4.42,3.57,0],[-4.63,5.77,1],[-3.2,2.85,0],[-3.78,2.53,0],[-5.44,4.15,1],[-3.75,1.22,0],[-3.95,0.69,1],[4.66,-4.12,0],[-3.22,2.6,1],[-4.84,2.91,0],[-7.03,4.64,1],[-9.49,7.66,2],[-3.84,1.45,3],[-4.73,0.88,4],[-3.1,2.91,0],[-2.92,1.73,1],[3.92,-4.17,0],[7.88,-6.72,1],[-5.88,4.16,2]],"v1":[[1,"b",13,-1],[2,"b",13,1],[3,"b",13,-1],[4,"s",8,-1],[5,"e",11,-1],[6,"s",8,-1],[7,"s",2,1],[8,"s",7,1],[9,"s",10,-1],[10,"b",13,1],[11,"b",13,-1],[12,"s",8,-1],[13,"b",13,-1],[14,"b",13,-1],[15,"s",12,-1],[16,"s",4,-1],[17,"s",10,-1],[18,"s",6,1],[19,"s",5,1],[20,"b",13,1],[21,"s",6,-1],[22,"s",3,-1],[23,"b",13,-1],[24,"b",13,1],[25,"e",12,-1],[26,"s",7,-1],[27,"b",13,1],[28,"s",7,-1],[29,"p",0,-1],[30,"b",13,-1]],"v2":[[1,"s",6,-1],[2,"s",5,1],[3,"s",6,-1],[4,"s",9,-1],[5,"s",4,-1],[6,"s",6,-1],[7,"s",4,1],[8,"e",5,1],[9,"e",10,-1],[10,"s",4,1],[11,"b",13,-1],[12,"s",5,-1],[13,"s",6,-1],[14,"s",6,-1],[15,"s",6,-1],[16,"s",11,-1],[17,"e",5,-1],[18,"s",4,1],[19,"s",4,1],[20,"s",6,1],[21,"s",8,-1],[22,"s",5,-1],[23,"s",10,-1],[24,"s",4,1],[25,"s",7,-1],[26,"s",4,-1],[27,"b",13,1],[28,"s",6,-1],[29,"p",0,-1],[30,"s",6,-1]],"vis":[[1,"e",3,-1],[2,"s",3,1],[3,"e",3,-1],[4,"e",4,-1],[5,"e",2,-1],[6,"e",4,-1],[7,"e",3,1],[8,"e",3,1],[9,"e",2,-1],[10,"e",3,1],[11,"e",3,-1],[12,"e",3,-1],[13,"s",3,-1],[14,"e",3,-1],[15,"e",3,-1],[16,"e",3,-1],[17,"e",3,-1],[18,"e",3,1],[19,"e",3,1],[20,"e",3,1],[21,"e",2,-1],[22,"e",3,-1],[23,"e",3,-1],[24,"e",3,1],[25,"e",2,-1],[26,"e",3,-1],[27,"e",3,1],[28,"s",3,-1],[29,"p",0,-1],[30,"e",3,-1]],"trace":[{"stop":null,"y":-0.5,"dy":null,"dx":null,"shear":{"axial_left_px":-2.3,"axial_right_px":0.74,"lateral_px":-1.02,"asymmetry_px":-1.56},"note":"LIVE start: tube held above the inclined block, hole slightly ahead/right of the tube tip. Mirroring the demonstration's coarse approach: move forward (+x) and down (-z) toward the inclined face while keeping the grip at 5.7 mm."},{"stop":"s1_jam","y":-0.5,"dy":1.0,"dx":"+","shear":{"axial_left_px":-4.53,"axial_right_px":5.9,"lateral_px":-1.53,"asymmetry_px":1.36},"note":"No jam yet and the tube tip is close to the inclined face but not yet seated in the hole. Continue the demonstration-style advance: small forward/down steps along the tube axis toward the hole, keeping the grip fixed."},{"stop":null,"y":0.5,"dy":null,"dx":null,"shear":{"axial_left_px":-2.6,"axial_right_px":0.59,"lateral_px":-0.94,"asymmetry_px":-2.01},"note":"Jam at the hole rim: System 1 says shift hand y by +1.0 mm (high confidence) and x slightly +. Back off ~1 mm along the tube/hole axis, apply the y (+1) and small x (+1) re-centring, then push back along the axis in short rows."},{"stop":"s1_jam","y":0.5,"dy":0.0,"dx":"+","shear":{"axial_left_px":-5.53,"axial_right_px":5.37,"lateral_px":-0.22,"asymmetry_px":-0.16},"note":"No jam after the re-centring; shear is low and the tip sits at the inclined face. Continue pushing along the tube axis (forward +x, down -z) in short rows so the tube can enter the tight hole."},{"stop":"s1_jam","y":0.4,"dy":0.5,"dx":"-","shear":{"axial_left_px":-5.41,"axial_right_px":5.77,"lateral_px":0.42,"asymmetry_px":0.36},"note":"Jam at the rim with y estimate now 0.0 (high confidence), so y is centred; only a low-confidence +x hint remains. Back off ~1 mm along the hole axis, nudge x by +1 mm, then push along the axis again in short rows."},{"stop":"task_success","y":0.7,"dy":null,"dx":null,"shear":{"axial_left_px":-2.57,"axial_right_px":2.09,"lateral_px":0.01,"asymmetry_px":-0.48},"note":"Jam again at the rim; y estimates bracket the hole (0.0 then +0.5) so I take a small +0.3 mm y correction rather than the full amount, back off ~1 mm along the hole axis first, and x hint flipped sign so I leave x alone. Then push along the axis again in short rows."}]}</script>
+<script>
+(function () {
+  const D = JSON.parse(document.getElementById('data').textContent);
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  function jsonHTML(o, ind = 0) {
+    const pad = '  '.repeat(ind);
+    if (o === null) return '<span class="n">null</span>';
+    if (typeof o === 'string') return `<span class="s">"${esc(o)}"</span>`;
+    if (typeof o === 'number') return `<span class="n">${o}</span>`;
+    if (Array.isArray(o)) {
+      if (!o.length) return '[]';
+      if (o.every(v => typeof v !== 'object')) return '[' + o.map(v => jsonHTML(v)).join(', ') + ']';
+      return '[\n' + o.map(v => pad + '  ' + jsonHTML(v, ind + 1)).join(',\n') + '\n' + pad + ']';
+    }
+    const ks = Object.keys(o);
+    const flat = ks.every(k => typeof o[k] !== 'object' || o[k] === null) && ks.length <= 4;
+    if (flat) return '{ ' + ks.map(k => `<span class="k">"${k}"</span>: ${jsonHTML(o[k])}`).join(', ') + ' }';
+    return '{\n' + ks.map(k => `${pad}  <span class="k">"${k}"</span>: ${jsonHTML(o[k], ind + 1)}`).join(',\n') + '\n' + pad + '}';
+  }
+  function tabs(container, attr, onPick) {
+    const btns = [...document.querySelectorAll(`.tab[data-${attr}]`)];
+    btns.forEach(b => b.addEventListener('click', () => {
+      btns.forEach(x => x.setAttribute('aria-selected', String(x === b)));
+      onPick(b.dataset[attr]);
+    }));
+  }
+
+  // side by side
+  const CMP = {
+    vis: { src: 'vision_1000003', tag: ['bad', 'FAILED · tube slid out'], h: 'Keeps pushing.', p: 'Vision cannot resolve a 2–3 mm offset at the rim. The model follows the demonstration\'s approach, the tube jams, and it slides more than 3 cm inside the gripper. The evaluator ends the episode. 26 of 30 vision-only episodes end this way.', kv: [['touch', 'not used by the model'], ['result', '3 / 30 overall']] },
+    stop: { src: 'stoponly_1000003', tag: ['mid', 'FAILED · no direction'], h: 'Stops in time. Then guesses.', p: 'The jam guard halts each push the moment shear rises. The receipt carries raw shear numbers, but the frozen model cannot turn them into a direction. It re-pushes at the rim, jams three times, and the tube still ends up sliding out.', kv: [['touch', 'stop signal + raw shear'], ['result', '0 / 10 (ablation)']] },
+    ours: { src: 'v2_1000003', tag: ['ok', 'SUCCESS · 6 calls'], h: 'Reads the jam. Moves 1 mm.', p: 'At the first jam the receipt says shift_hand_y_mm +1.0. The model backs off, shifts, pushes again, and when two jams bracket the hole it takes a 0.3 mm step between them. The tube goes 3 cm deep.', kv: [['touch', 'stop + mm estimate + history'], ['result', '24 / 30 overall']] },
+  };
+  const cv = $('#cmp-video');
+  function pickCmp(k) {
+    const c = CMP[k];
+    cv.src = `media/${c.src}.mp4`; cv.poster = `media/p_${c.src}.jpg`;
+    const pr = cv.play(); if (pr && pr.catch) pr.catch(() => {});
+    $('#cmp-verdict').innerHTML = `<span class="tag ${c.tag[0]}">${c.tag[1]}</span><h3>${c.h}</h3><p>${c.p}</p><dl class="kv">${c.kv.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
+  }
+  document.querySelectorAll('.tab[data-k]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tab[data-k]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+    pickCmp(b.dataset.k);
+  }));
+  pickCmp('ours');
+
+  // TRAIN receipt
+  $('#train-json').innerHTML = jsonHTML({
+    stop_reason: 's1_jam',
+    system1: {
+      events: [{ row: 4, event: 'jam' }],
+      marker_shear_px: { axial_left_px: -7.24, axial_right_px: 4.57, lateral_px: -0.18, asymmetry_px: -2.67 },
+      offset_hint: { shift_hand_y_mm: -2.0, y_confidence: 'high', shift_hand_x: '+', x_confidence: 'low' },
+    },
+  });
+
+  // stepper
+  const T = D.trace;
+  let cur = 1;
+  const ticks = $('#ticks');
+  T.forEach((t, i) => {
+    const b = document.createElement('button');
+    b.textContent = i + 1;
+    b.className = t.stop === 'task_success' ? 'win' : t.stop === 's1_jam' ? 'jam' : '';
+    b.setAttribute('aria-label', `Call ${i + 1}`);
+    b.addEventListener('click', () => show(i));
+    ticks.appendChild(b);
+  });
+  const hist = [];
+  T.forEach((t, i) => { if (t.stop === 's1_jam') hist.push({ call: i, ee_y_mm: t.y, shift_hand_y_mm: t.dy }); t.hist = hist.slice(); });
+  function show(i) {
+    cur = Math.max(0, Math.min(T.length - 1, i));
+    const t = T[cur];
+    [...ticks.children].forEach((b, j) => b.setAttribute('aria-current', String(j === cur)));
+    $('#call-who').textContent = `call ${cur + 1} of ${T.length} · hand y ${t.y} mm after the call`;
+    $('#call-note').textContent = '“' + t.note + '”';
+    const s1 = { stop_reason: t.stop || 'rows completed' };
+    if (t.shear) s1.marker_shear_px = t.shear;
+    if (t.stop === 's1_jam') { s1.offset_hint = { shift_hand_y_mm: t.dy, y_confidence: 'high', shift_hand_x: t.dx, x_confidence: 'low' }; s1.jam_history = t.hist.slice(-3); }
+    $('#call-json').innerHTML = jsonHTML(s1);
+  }
+  $('#prev').addEventListener('click', () => show(cur - 1));
+  $('#next').addEventListener('click', () => show(cur + 1));
+  show(1);
+
+  // scatter
+  const svg = $('#scatter');
+  const W = 460, H = 340, L = 52, R = 16, Tp = 16, B = 46, xs = [-10, 8], ys = [-8, 8];
+  const X = v => L + (v - xs[0]) / (xs[1] - xs[0]) * (W - L - R);
+  const Y = v => Tp + (ys[1] - v) / (ys[1] - ys[0]) * (H - Tp - B);
+  const ns = 'http://www.w3.org/2000/svg';
+  const el = (t, a, txt) => { const e = document.createElementNS(ns, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+  for (let v = -8; v <= 8; v += 4) { el('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: 'var(--line)' }); el('text', { x: L - 8, y: Y(v) + 4, 'text-anchor': 'end' }, v); }
+  for (let v = -8; v <= 8; v += 4) el('text', { x: X(v), y: H - B + 18, 'text-anchor': 'middle' }, v);
+  el('line', { x1: X(0), x2: X(0), y1: Tp, y2: H - B, stroke: 'var(--line)', 'stroke-dasharray': '3 4' });
+  const f = a => -0.79 * a - 0.4;
+  el('line', { x1: X(-10), y1: Y(f(-10)), x2: X(8), y2: Y(f(8)), stroke: 'var(--wood)', 'stroke-width': 2.5 });
+  el('text', { x: X(0.8), y: Y(f(0.8)) - 12, class: 'ink' }, 'hand_y = −0.79·asym − 0.4');
+  D.calib.forEach(([a, y, k]) => { const c = el('circle', { cx: X(a), cy: Y(y), r: 6, fill: k === 0 ? 'var(--gel)' : 'var(--canvas)', stroke: 'var(--gel)', 'stroke-width': 2 }); el('title', {}, `asym ${a} px → hand y ${y} mm (${k === 0 ? 'first' : 'later'} jam)`); c.appendChild(svg.lastChild); });
+  el('text', { x: (L + W - R) / 2, y: H - 10, 'text-anchor': 'middle' }, 'pad asymmetry |R|−|L| at the jam (px)  ·  ● first jam  ○ later jam');
+  el('text', { x: 14, y: (Tp + H - B) / 2, 'text-anchor': 'middle', transform: `rotate(-90 14 ${(Tp + H - B) / 2})` }, 'hand y offset from hole axis (mm)');
+
+  // seed grid
+  const M = [['v2', 'Tactile ICL', 'ours · guard v2', true], ['v1', 'Direction-only hint', 'guard v1', false], ['vis', 'Vision only', 'direct control', false]];
+  const g = $('#seedgrid');
+  const add = (tag, cls, html) => { const e = document.createElement(tag); e.className = cls; if (html != null) e.innerHTML = html; g.appendChild(e); return e; };
+  const names = { s: 'success', e: 'slid out', b: 'budget used up', p: 'pre-move failed' };
+  const dots = [], labs = {};
+  M.forEach(([k, name, sub, lead]) => {
+    labs[k] = add('div', 'lab' + (lead ? ' lead' : ''), '');
+    D[k].forEach(([s, end, calls, side]) => { const d = add('i', 'dot ' + end); d.title = `seed ${1000000 + s}: ${names[end]}, ${calls} calls`; dots.push([d, side, k, end]); });
+  });
+  add('div', 'axis', '');
+  for (let i = 1; i <= 30; i++) add('div', 'axis', i === 1 || i % 5 === 0 ? String(i) : '');
+  function filt(f) {
+    const keep = side => f === 'all' || (f === 'pos' ? side > 0 : side < 0);
+    dots.forEach(([d, side]) => d.classList.toggle('off', !keep(side)));
+    const sc = $('#score'); sc.innerHTML = '';
+    M.forEach(([k, name, sub, lead]) => {
+      const rows = D[k].filter(r => keep(r[3]));
+      const ok = rows.filter(r => r[1] === 's').length;
+      labs[k].innerHTML = `${name}<small>${ok}/${rows.length} · ${sub}</small>`;
+      const run = rows.filter(r => r[1] !== 'p');
+      const calls = run.reduce((a, r) => a + r[2], 0) / Math.max(1, run.length);
+      sc.insertAdjacentHTML('beforeend', `<div class="card"><span class="big ${lead ? 'g' : ''}">${ok}<small>/${rows.length}</small></span><h3>${name}</h3><p>${rows.filter(r => r[1] === 'e').length} slid out · ${rows.filter(r => r[1] === 'b').length} out of calls · ${calls.toFixed(1)} calls per episode</p></div>`);
+    });
+  }
+  document.querySelectorAll('.tab[data-f]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tab[data-f]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+    filt(b.dataset.f);
+  }));
+  filt('all');
+
+  // failures
+  const FX = {
+    deep: { src: 'v2fail_1000011', tag: ['mid', '3 of 30 · seeds 1000009, 1000011, 1000027'], h: 'Aligned, but stuck around 25 mm deep.', p: 'The y estimate converges to within 1 mm, yet the tube keeps stalling deep in the hole while in-hand slip builds up. The current signals cannot tell "sliding in" from "slipping in the hand". Next: a stick-slip signature in the shear, or wrist-camera tube tracking.' },
+    approach: { src: 'v2fail_1000008', tag: ['bad', '2 of 30 · seeds 1000008, 1000017'], h: 'The first push goes the wrong way.', p: 'On these seeds the first call pushes along −x, away from the hole axis. The guard fires late or not at all, and the tube slides out. This is a coarse-vision error: touch never gets its turn.' },
+    vision: { src: 'vision_1000014', tag: ['bad', '26 of 30 vision-only episodes'], h: 'For contrast: no touch at all.', p: 'Seed 1000014, which tactile ICL solves after four jams. Without touch the model pushes straight on and the tube slides out of the gripper.' },
+  };
+  const fv = $('#fail-video');
+  function pickFail(k) { const c = FX[k]; fv.src = `media/${c.src}.mp4`; fv.poster = `media/p_${c.src}.jpg`; $('#fail-verdict').innerHTML = `<span class="tag ${c.tag[0]}">${c.tag[1]}</span><h3>${c.h}</h3><p>${c.p}</p>`; }
+  document.querySelectorAll('.tab[data-x]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tab[data-x]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+    pickFail(b.dataset.x);
+  }));
+  pickFail('deep');
+
+  // faq + copy
+  const ex = $('#expand');
+  ex.addEventListener('click', () => {
+    const all = [...document.querySelectorAll('.faq details')];
+    const open = !all.every(d => d.open);
+    all.forEach(d => d.open = open);
+    ex.textContent = open ? 'Collapse all' : 'Expand all';
+  });
+  $('#copy').addEventListener('click', () => {
+    const text = $('#bib').textContent, btn = $('#copy');
+    const done = () => { btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy', 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents($('#bib')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected · press Ctrl+C'; };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+})();
+</script>

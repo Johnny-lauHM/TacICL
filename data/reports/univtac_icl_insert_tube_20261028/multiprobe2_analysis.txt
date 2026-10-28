@@ -1,0 +1,31 @@
+seed success jams final_hand_res noise
+seed_2000302 True 1 [4.38, -1.16, -46.5] [2.8, -1.4]
+seed_2000303 False 2 [-1.52, 1.06, -47.12] [-1.8, 3.8]
+seed_2000304 False 1 [-1.28, -1.76, -49.33] [2.6, 3.3]
+seed_2000305 True 2 [-0.3, -0.13, -46.78] [-1.3, 3.2]
+seed_2000306 False 0 [0.13, 1.53, -40.58] [3.9, 2.0]
+seed_2000307 True 2 [-0.0, -0.07, -51.49] [2.7, 1.5]
+seed_2000308 False 2 [-0.17, -1.62, -50.77] [1.6, -3.5]
+seed_2000309 False 0 [-6.79, 2.2, -41.06] [-3.7, 2.8]
+seed_2000310 False 0 [-1.69, 0.8, -40.71] [2.1, 1.3]
+seed_2000311 False 0 [-4.89, -2.08, -40.57] [-3.1, -1.5]
+seed_2000312 False 5 [0.23, 0.16, -45.0] [3.8, 3.3]
+seed_2000313 False 0 [-0.32, 2.56, 52.5] [2.4, 2.9]
+seed_2000314 False 2 [0.82, 1.03, -46.84] [1.8, 3.5]
+seed_2000315 True 3 [1.61, -0.09, -36.77] [1.1, -3.6]
+first jam: n=9  |hand x| median 2.7  |hand y| median 2.9 mm
+  episode lateral_px rx+0.33 ry+0.06 | lateral_left_px rx+0.36 ry+0.17 | lateral_right_px rx+0.23 ry-0.13 | asymmetry_px rx+0.42 ry-0.97 | axial_left_px rx+0.47 ry-0.98 | axial_right_px rx+0.37 ry-0.96
+  push    lateral_px rx+0.33 ry+0.06 | lateral_left_px rx+0.36 ry+0.17 | lateral_right_px rx+0.23 ry-0.13 | asymmetry_px rx+0.42 ry-0.97 | axial_left_px rx+0.47 ry-0.98 | axial_right_px rx+0.37 ry-0.96
+  v1 rule sign acc: x 0.44  y 1.00
+later jams: n=11  |hand x| median 0.6  |hand y| median 4.2 mm
+  episode lateral_px rx-0.16 ry+0.37 | lateral_left_px rx-0.15 ry+0.50 | lateral_right_px rx-0.16 ry+0.17 | asymmetry_px rx+0.14 ry-0.93 | axial_left_px rx+0.20 ry-0.92 | axial_right_px rx+0.02 ry-0.92
+  push    lateral_px rx-0.05 ry+0.02 | lateral_left_px rx+0.01 ry-0.30 | lateral_right_px rx-0.10 ry+0.35 | asymmetry_px rx+0.15 ry+0.05 | axial_left_px rx-0.34 ry-0.01 | axial_right_px rx+0.45 ry+0.05
+  v1 rule sign acc: x 0.55  y 1.00
+later, retracted before push: n=4  |hand x| median 0.7  |hand y| median 4.7 mm
+  episode lateral_px rx-0.88 ry+0.62 | lateral_left_px rx-0.36 ry+0.83 | lateral_right_px rx-0.57 ry-0.46 | asymmetry_px rx+0.44 ry-0.97 | axial_left_px rx+0.36 ry-0.96 | axial_right_px rx+0.36 ry-0.99
+  push    lateral_px rx-0.87 ry-0.11 | lateral_left_px rx-0.15 ry-0.81 | lateral_right_px rx-0.76 ry+0.84 | asymmetry_px rx-0.31 ry-0.07 | axial_left_px rx-0.42 ry-0.50 | axial_right_px rx+0.10 ry+0.60
+  v1 rule sign acc: x 0.75  y 1.00
+later, no retract: n=7  |hand x| median 0.6  |hand y| median 4.2 mm
+  episode lateral_px rx-0.12 ry+0.73 | lateral_left_px rx-0.12 ry+0.80 | lateral_right_px rx-0.12 ry+0.63 | asymmetry_px rx-0.38 ry-0.68 | axial_left_px rx+0.08 ry-0.81 | axial_right_px rx-0.52 ry-0.47
+  push    lateral_px rx-0.02 ry+0.35 | lateral_left_px rx-0.02 ry+0.15 | lateral_right_px rx-0.02 ry+0.48 | asymmetry_px rx+0.42 ry+0.73 | axial_left_px rx-0.29 ry+0.78 | axial_right_px rx+0.66 ry+0.07
+  v1 rule sign acc: x 0.43  y 1.00
